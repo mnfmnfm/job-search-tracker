@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('now you\'re looking for jobs'));
+const pug = require('pug');
+
+const homepageRenderer = pug.compileFile('pugTemplates/home.pug');
+app.get('/', (req, res) => res.send(homepageRenderer({name: 'Erin'})));
 
 app.listen(3000);
