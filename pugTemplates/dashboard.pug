@@ -12,4 +12,13 @@ html
         +companyCard(company)
       else
         h3 You don't have any companies yet! Add one to get started.
+      
+      form(action="/companies", method="post")
+        label(for="name") Company name
+        input#name(type="text", name="name")
+        label(for="status") Status
+        input#status(type="text", name="status")
+        label(for="notes") Notes
+        input#notes(type="text", name="notes")
+        input(type="submit", value="Add company")
 
