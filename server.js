@@ -29,7 +29,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.AUTH0_SECRET,
-  baseURL: 'http://localhost:3000',
+  baseURL: process.env.BASE_URL || 'http://localhost:3000',
   clientID: 'SAMV3XkhTcdEMK4eBZLBzzIvM5UJWPyj',
   issuerBaseURL: 'https://dev-pv-70kd5.us.auth0.com',
 };
