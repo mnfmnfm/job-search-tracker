@@ -7,6 +7,8 @@ const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestor
 
 const PORT = process.env.PORT || 3000;
 
+app.use(express.static('public'));
+
 const serviceAccount = require('./secrets/job-search-tracker-9e5f8-9ebf83110bc5.json');
 
 initializeApp({
@@ -32,17 +34,23 @@ const config = {
   baseURL: process.env.BASE_URL || 'http://localhost:3000',
   clientID: 'SAMV3XkhTcdEMK4eBZLBzzIvM5UJWPyj',
   issuerBaseURL: 'https://dev-pv-70kd5.us.auth0.com',
+  routes: {
+    login: false
+  }
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
 const homepageRenderer = pug.compileFile('pugTemplates/home.pug');
+
+app.get('/login', (req, res) => res.oidc.login({ returnTo: '/dashboard' }));
+
 app.get('/', (req, res) => res.send(homepageRenderer({user: req.oidc.user})));
 
 const dashboardRenderer = pug.compileFile('pugTemplates/dashboard.pug')
 app.get('/dashboard', requiresAuth(), (req, res) => {
-  res.send(dashboardRenderer({user: req.oidc.user, companies: [{name: 'Meta', status: 'Not Hiring', notes: ''}]}))
+  res.send(dashboardRenderer({user: req.oidc.user, companies: [{name: 'Meta', status: 'Not Hiring', notes: ''}, {name: 'Meta', status: 'Not Hiring', notes: ''}]}))
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
