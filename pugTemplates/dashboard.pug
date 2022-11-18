@@ -1,0 +1,14 @@
+include components/companyCard.pug
+doctype html
+html 
+  include components/head.pug
+
+  body 
+    include components/header.pug
+    h2 Dashboard
+
+    each company in companies
+      +companyCard(company)
+    else
+      h3 You don't have any companies yet! Add one to get started.
+

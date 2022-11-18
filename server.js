@@ -38,10 +38,11 @@ const config = {
 app.use(auth(config));
 
 const homepageRenderer = pug.compileFile('pugTemplates/home.pug');
-app.get('/', (req, res) => res.send(homepageRenderer({name: 'Erin'})));
+app.get('/', (req, res) => res.send(homepageRenderer({user: req.oidc.user})));
 
+const dashboardRenderer = pug.compileFile('pugTemplates/dashboard.pug')
 app.get('/dashboard', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
+  res.send(dashboardRenderer({user: req.oidc.user, companies: [{name: 'Meta', status: 'Not Hiring', notes: ''}]}))
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
