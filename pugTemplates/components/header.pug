@@ -1,0 +1,10 @@
+header 
+  h1 Job Search Tracker
+  if user
+    h2.green Welcome, #{user.nickname}
+    h3
+      a(href="/dashboard") Dashboard
+      a(href="/logout") Log out
+  else
+    h2.green
+      a(href='/login') Log in
