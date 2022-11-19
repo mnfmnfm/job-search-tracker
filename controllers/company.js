@@ -60,6 +60,14 @@ const companyHandler = async(req, res) => {
   }
 }
 
+const companyUpdateHandler = async(req, res) => {
+  const companyId = req.params.id;
+  const userId = req.oidc.user.sub;
+  const docRef = db.collection('users').doc(userId).collection('companies').doc(companyId);
+  await docRef.update(req.body);
+  res.redirect(`/companies/${companyId}`);
+}
+
 const companyDeleteHandler = async(req, res) => {
   // delete the company
   const companyId = req.params.id;
@@ -72,6 +80,7 @@ const companyDeleteHandler = async(req, res) => {
 module.exports = {
   post: companyPostHandler,
   get: companyHandler,
+  update: companyUpdateHandler,
   delete: companyDeleteHandler,
   dashboard: dashboardHandler
 };
