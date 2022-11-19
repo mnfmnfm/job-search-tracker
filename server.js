@@ -7,8 +7,7 @@ const pug = require('pug');
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
-app.use(express.urlencoded());
-
+app.use(express.urlencoded({extended: true}));
 
 const { auth, requiresAuth } = require('express-openid-connect');
 
@@ -33,10 +32,11 @@ app.get('/login', (req, res) => res.oidc.login({ returnTo: '/dashboard' }));
 
 app.get('/', (req, res) => res.send(homepageRenderer({user: req.oidc.user})));
 
-const companyHandler = require('./controllers/company');
-const dashboardHandler = require('./controllers/dashboard.js');
+const companyHandlers = require('./controllers/company');
 
-app.get('/dashboard', requiresAuth(), dashboardHandler);
-app.post('/companies', requiresAuth(), companyHandler);
+app.get('/dashboard', requiresAuth(), companyHandlers.dashboard);
+app.get('/companies/:id', requiresAuth(), companyHandlers.get);
+app.post('/companies', requiresAuth(), companyHandlers.post);
+app.post('/companies/:id/delete', requiresAuth(), companyHandlers.delete);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
