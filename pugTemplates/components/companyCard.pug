@@ -1,5 +1,6 @@
 mixin companyCard(company)
   div.card.w-75
-    h4.card-title #{company.name}
+    h4.card-title 
+      a(href="/companies/" + company.id) #{company.name}
     h5 Status: #{company.status}
     p.card-text #{company.notes}
