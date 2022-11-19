@@ -13,5 +13,24 @@ html
       form(action="/companies/" + companyId + "/delete", method="post")
         label(for="confirm") Confirm deletion
         input#confirm(type="checkbox", name="confirm", required)
-        input(type="submit", value="Delete company")
+        input.btn.btn-danger(type="submit", value="Delete company")
+
+      button.btn.btn-primary(type="button",data-bs-toggle="modal", data-bs-target="#modal") Edit company
+
+      div#modal.modal.fade(tabindex="-1", aria-labelledby="modalLabel", aria-hidden="true")
+        .modal-dialog 
+          .modal-content
+            .modal-header 
+              h5#modalLabel.modal-title Edit company
+              button.btn-close(aria-label="Close", data-bs-dismiss="modal")
+            form(action="/companies/" + companyId + "/update", method="post")
+              .modal-body 
+                label.form-label(for="name") Company name 
+                input#name.form-control(type="text", name="name", value=company.name)
+                label.form-label(for="status") Status
+                input#status.form-control(type="text", name="status", value=company.status)
+                label.form-label(for="notes") Notes
+                input#notes.form-control(type="text", name="notes", value=company.notes)
+              .modal-footer
+                input.btn.btn-primary(type="submit", value="Update company")
 

@@ -37,6 +37,7 @@ const companyHandlers = require('./controllers/company');
 app.get('/dashboard', requiresAuth(), companyHandlers.dashboard);
 app.get('/companies/:id', requiresAuth(), companyHandlers.get);
 app.post('/companies', requiresAuth(), companyHandlers.post);
+app.post('/companies/:id/update', requiresAuth(), companyHandlers.update)
 app.post('/companies/:id/delete', requiresAuth(), companyHandlers.delete);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
